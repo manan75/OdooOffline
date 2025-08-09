@@ -10,6 +10,7 @@ import Login_1 from './components/Login_1'
 import Login_2 from './components/Login_2'
 import DashBoard from './components/DashBoard'
 import Dashboard2 from './components/DashBoard2'
+import KindleDashboard from './components/LibDashBoard'
 
 
 
@@ -20,7 +21,8 @@ function App() {
   return (
     <>
       {/* <DashBoard/> */}
-      <Dashboard2/>
+      <KindleDashboard/>
+      {/* <Dashboard2/> */}
      {/* <Login_2/> */}
     </>
   )

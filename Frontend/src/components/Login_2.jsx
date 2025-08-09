@@ -1,34 +1,35 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
-const Login_1 = () => {
+const Login_2 = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
   const handleAdminLogin = (e) => {
     e.preventDefault();
     alert("Admin login functionality goes here");
-    // Example API call:
-    // fetch("/api/admin/login", { method: "POST", body: JSON.stringify({ email, password }) })
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* Left side with full image */}
-      <div className="w-1/2 relative h-screen">
-        <img
-          src="https://i.pinimg.com/1200x/22/20/ad/2220ad38b822dcb811c804cb06d2022e.jpg"
-          alt="Welcome"
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex w-full max-w-4xl bg-white/30 backdrop-blur-md rounded-xl shadow-lg overflow-hidden">
+        
+        {/* Left Side with GIF */}
+        <div className="hidden md:flex flex-col justify-center items-center w-1/2 relative">
+          <img
+            src="https://i.pinimg.com/originals/54/58/a1/5458a14ae4c8f07055b7441ff0f234cf.gif"
+            alt="Animated Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 flex flex-col justify-center items-center">
+          </div>
+        </div>
 
-      {/* Right side */}
-      <div className="w-1/2 flex flex-col justify-center items-center p-8 bg-white/70 backdrop-blur-sm">
-        <div className="w-full max-w-md">
-          <h2 className="text-3xl font-bold mb-2">
-            {isAdmin ? "Admin Login" : isLogin ? "Login" : "Sign Up"}
-          </h2>
+        {/* Right Side */}
+        <div className="w-full md:w-1/2 p-8 bg-white/70 backdrop-blur-sm">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-1">
+            {isAdmin ? "Admin Login" : isLogin ? "Login" : "Register"}
+          </h3>
           <p className="text-sm text-gray-500 mb-6">
             {isAdmin
               ? "Enter your admin credentials to access the dashboard."
@@ -39,66 +40,67 @@ const Login_1 = () => {
 
           {!isAdmin && (
             <>
-              {/* Google Auth */}
-              <button className="flex items-center justify-center border w-full py-2 mb-4">
-                <FcGoogle className="mr-2" />
-                {isLogin ? "Sign in with Google" : "Sign up with Google"}
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 py-2 mb-4 border border-gray-300 rounded hover:bg-gray-100 transition"
+              >
+                <FcGoogle size={20} />
+                <span className="text-sm text-gray-700">
+                  {isLogin ? "Sign in with Google" : "Sign up with Google"}
+                </span>
               </button>
 
-              {/* Admin Login Button */}
               <button
+                type="button"
                 onClick={() => {
                   setIsAdmin(true);
                   setIsLogin(true);
                 }}
-                className="w-full border border-red-400 text-red-500 py-2 mb-4 hover:bg-red-50 transition"
+                className="w-full py-2 mb-4 border border-red-400 text-red-500 rounded hover:bg-red-50 transition"
               >
                 Admin Login
               </button>
 
-              {/* Divider */}
-              <div className="flex items-center mb-4">
-                <div className="flex-grow border-t" />
-                <span className="px-2 text-gray-500">
+              <div className="relative text-center my-4">
+                <span className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-gray-300"></span>
+                </span>
+                <span className="relative bg-white/70 px-2 text-sm text-gray-500">
                   or {isLogin ? "login" : "register"} with email
                 </span>
-                <div className="flex-grow border-t" />
               </div>
             </>
           )}
 
-          {/* Form */}
           <form
+            className="space-y-4"
             onSubmit={isAdmin ? handleAdminLogin : (e) => e.preventDefault()}
           >
             {!isLogin && !isAdmin && (
               <input
                 type="text"
                 placeholder="Full Name"
-                className="w-full border mb-4 p-2"
+                className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             )}
             <input
               type="email"
               placeholder="Email"
-              className="w-full border mb-4 p-2"
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <input
               type="password"
               placeholder="Password"
-              className="w-full border mb-4 p-2"
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             {isLogin && !isAdmin && (
-              <div className="flex justify-between items-center mb-4 text-sm">
+              <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center">
                   <input type="checkbox" className="mr-2" />
                   Remember Me
                 </label>
-                <button
-                  type="button"
-                  className="text-purple-600 hover:underline"
-                >
+                <button type="button" className="text-purple-600 hover:underline">
                   Forgot Password?
                 </button>
               </div>
@@ -106,23 +108,18 @@ const Login_1 = () => {
 
             <button
               type="submit"
-              className={`w-full py-2 mb-4 text-white ${
+              className={`w-full py-2 rounded transition ${
                 isAdmin
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-purple-600 hover:bg-purple-700"
+                  ? "bg-red-500 text-white hover:bg-red-600"
+                  : "bg-purple-600 text-white hover:bg-purple-700"
               }`}
             >
-              {isAdmin
-                ? "Login as Admin"
-                : isLogin
-                ? "Login"
-                : "Create Account"}
+              {isAdmin ? "Login as Admin" : isLogin ? "Login" : "Create Account"}
             </button>
           </form>
 
-          {/* Toggle between Login / Signup */}
           {!isAdmin && (
-            <p className="text-center text-sm">
+            <div className="mt-4 text-center text-sm">
               {isLogin ? (
                 <>
                   New User?{" "}
@@ -144,10 +141,9 @@ const Login_1 = () => {
                   </button>
                 </>
               )}
-            </p>
+            </div>
           )}
 
-          {/* Back to User Login */}
           {isAdmin && (
             <div className="mt-4 text-center text-sm">
               <button
@@ -164,4 +160,4 @@ const Login_1 = () => {
   );
 };
 
-export default Login_1;
+export default Login_2;

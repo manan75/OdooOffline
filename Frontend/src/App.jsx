@@ -7,6 +7,7 @@ import CardCarousel from './components/CardCarousel'
 import HeroSection_1 from './components/HeroSection_1'
 import Login from './components/Login'
 import Login_1 from './components/Login_1'
+import Login_2 from './components/Login_2'
 
 
 
@@ -17,7 +18,7 @@ function App() {
   return (
     <>
       
-    <Login/>
+    <Login_2/>
    
     </>
   )

@@ -27,7 +27,7 @@ const Login_2 = () => {
 
         {/* Right Side */}
         <div className="w-full md:w-1/2 p-8 bg-white/70 backdrop-blur-sm">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-1">
+          <h3 className="text-3xl font-semibold text-gray-800 mb-1">
             {isAdmin ? "Admin Login" : isLogin ? "Login" : "Register"}
           </h3>
           <p className="text-sm text-gray-500 mb-6">
@@ -37,40 +37,6 @@ const Login_2 = () => {
               ? "Welcome back! Please login to your account."
               : "Create your account to get started."}
           </p>
-
-          {!isAdmin && (
-            <>
-              <button
-                type="button"
-                className="w-full flex items-center justify-center gap-2 py-2 mb-4 border border-gray-300 rounded hover:bg-gray-100 transition"
-              >
-                <FcGoogle size={20} />
-                <span className="text-sm text-gray-700">
-                  {isLogin ? "Sign in with Google" : "Sign up with Google"}
-                </span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setIsAdmin(true);
-                  setIsLogin(true);
-                }}
-                className="w-full py-2 mb-4 border border-red-400 text-red-500 rounded hover:bg-red-50 transition"
-              >
-                Admin Login
-              </button>
-
-              <div className="relative text-center my-4">
-                <span className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-gray-300"></span>
-                </span>
-                <span className="relative bg-white/70 px-2 text-sm text-gray-500">
-                  or {isLogin ? "login" : "register"} with email
-                </span>
-              </div>
-            </>
-          )}
 
           <form
             className="space-y-4"
@@ -111,12 +77,49 @@ const Login_2 = () => {
               className={`w-full py-2 rounded transition ${
                 isAdmin
                   ? "bg-red-500 text-white hover:bg-red-600"
-                  : "bg-purple-600 text-white hover:bg-purple-700"
+                  : "bg-purple-600 text-white hover:bg-purple-700 mt-5 mb-8 rounded-lg"
               }`}
             >
               {isAdmin ? "Login as Admin" : isLogin ? "Login" : "Create Account"}
             </button>
           </form>
+
+              <div className="relative text-center my-6">
+                <span className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-gray-300"></span>
+                </span>
+                <span className="relative bg-white/70 px-2 text-sm text-gray-500">
+                  or {isLogin ? "login" : "register"} with
+                </span>
+              </div>
+
+          {!isAdmin && (
+            <>
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 py-2 mb-4 border border-gray-300 rounded hover:bg-gray-100 transition"
+              >
+                <FcGoogle size={20} />
+                <span className="text-sm text-gray-700">
+                  {isLogin ? "Sign in with Google" : "Sign up with Google"}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsAdmin(true);
+                  setIsLogin(true);
+                }}
+                className="w-full py-2 mb-4 border border-red-400 text-red-500 rounded hover:bg-red-50 transition"
+              >
+                Admin Login
+              </button>
+
+            </>
+          )}
+
+          
 
           {!isAdmin && (
             <div className="mt-4 text-center text-sm">

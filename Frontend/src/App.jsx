@@ -1,5 +1,6 @@
-import { useState } from 'react'
+
 import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Card from './components/card'
 import Navbar from './components/navbar'
 import HeroSection from './components/HeroSection'
@@ -19,12 +20,13 @@ function App() {
  
 
   return (
-    <>
-      <KindleDashboard/>
-      {/* <Dashboard2/> */}
-     {/* <Form_2/> */}
-     {/* <Login_2/> */}
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Login_2/>}/>
+         <Route path='/userHome' element={<HeroSection/>}/>
+          
+      </Routes>
+    </Router>
   )
 }
 

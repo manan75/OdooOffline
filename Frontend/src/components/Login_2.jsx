@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+
 import axios from "axios";
+import { Link ,useNavigate} from 'react-router-dom';
+import { AppContent } from '../Context/AppContext';
 import { FcGoogle } from "react-icons/fc";
+import { useState,useEffect,useContext } from "react";
+
+
 
 const Login_2 = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,6 +18,10 @@ const Login_2 = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+    const navigate = useNavigate()
+  const { backendURL, setIsLoggedIn, getUserData } = useContext(AppContent) 
+
+
   // User Registration
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -20,10 +29,12 @@ const Login_2 = () => {
     setMessage("");
 
     try {
-      const res = await axios.post("/api/auth/register", { name, email, password });
+      const res = await axios.post(`${backendURL}/api/auth/register`, { name, email, password });
       setMessage(res.data.message);
       if (res.data.success) {
         setIsLogin(true);
+        console.log("Registration successful");
+        
       }
     } catch (err) {
       setMessage("Registration failed");
@@ -34,23 +45,35 @@ const Login_2 = () => {
 
   // User Login
   const handleUserLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
+  e.preventDefault();
+  setLoading(true);
+  setMessage("");
 
-    try {
-      const res = await axios.post("/api/users/login", { email, password });
-      setMessage(res.data.message);
-      if (res.data.success) {
-        // Redirect or store token
-        console.log("User token:", res.data.token);
-      }
-    } catch (err) {
-      setMessage("Login failed");
-    } finally {
-      setLoading(false);
+  try {
+    const { data } = await axios.post(
+      `${backendURL}/api/auth/login`,
+      { email, password },
+      { withCredentials: true }
+    );
+
+    setMessage(data.message);
+
+    if (data.success) {
+      setIsLoggedIn(true);
+      await getUserData();
+      console.log("Login response: ", data);
+      navigate('/userhome');
+    } else {
+      alert(data.message);
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setMessage("Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // Admin Login
   const handleAdminLogin = async (e) => {

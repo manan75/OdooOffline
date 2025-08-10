@@ -12,6 +12,7 @@ import DashBoard from './components/DashBoard'
 import Dashboard2 from './components/DashBoard2'
 import Form_2 from './components/Form_2'
 import Form from './components/Form'
+import KindleDashboard from './components/LibDashBoard.jsx'
 
 
 function App() {
@@ -19,8 +20,9 @@ function App() {
 
   return (
     <>
-      {/* <DashBoard/> */}
-     <Form/>
+      <KindleDashboard/>
+      {/* <Dashboard2/> */}
+     {/* <Form_2/> */}
      {/* <Login_2/> */}
     </>
   )

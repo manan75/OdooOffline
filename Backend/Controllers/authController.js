@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Users from '../Models/users.js';
+import User from '../Models/userSchema.js'
 
 // Register a new user
 export const register = async (req, res) => {
@@ -12,7 +12,7 @@ export const register = async (req, res) => {
 
   try {
     // Check if user already exists
-    const existingUser = await Users.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.json({ success: false, message: "User already exists" });
     }
@@ -21,7 +21,7 @@ export const register = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
 
     // Create and save new user
-    const newUser = new Users({
+    const newUser = new User({
       name,
       email,
       password: hashPassword,
@@ -50,7 +50,7 @@ export const login = async (req, res) => {
 
   try {
     // Explicitly select password field because it's hidden by default
-    const user = await Users.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
       return res.json({ success: false, message: "User not found" });

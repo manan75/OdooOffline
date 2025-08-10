@@ -10,19 +10,17 @@ import Login_1 from './components/Login_1'
 import Login_2 from './components/Login_2'
 import DashBoard from './components/DashBoard'
 import Dashboard2 from './components/DashBoard2'
-import KindleDashboard from './components/LibDashBoard'
-
-
+import Form_2 from './components/Form_2'
+import Form from './components/Form'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   return (
     <>
       {/* <DashBoard/> */}
-      <KindleDashboard/>
-      {/* <Dashboard2/> */}
+     <Form/>
      {/* <Login_2/> */}
     </>
   )

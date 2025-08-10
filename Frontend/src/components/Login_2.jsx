@@ -1,19 +1,80 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 
 const Login_2 = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const handleAdminLogin = (e) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  // User Registration
+  const handleRegister = async (e) => {
     e.preventDefault();
-    alert("Admin login functionality goes here");
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await axios.post("/api/auth/register", { name, email, password });
+      setMessage(res.data.message);
+      if (res.data.success) {
+        setIsLogin(true);
+      }
+    } catch (err) {
+      setMessage("Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // User Login
+  const handleUserLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await axios.post("/api/users/login", { email, password });
+      setMessage(res.data.message);
+      if (res.data.success) {
+        // Redirect or store token
+        console.log("User token:", res.data.token);
+      }
+    } catch (err) {
+      setMessage("Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Admin Login
+  const handleAdminLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await axios.post("/api/admin/login", { email, password });
+      setMessage(res.data.message);
+      if (res.data.success) {
+        console.log("Admin token:", res.data.token);
+      }
+    } catch (err) {
+      setMessage("Admin login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="flex w-full max-w-4xl bg-white/30 backdrop-blur-md rounded-xl shadow-lg overflow-hidden">
-        
+
         {/* Left Side with GIF */}
         <div className="hidden md:flex flex-col justify-center items-center w-1/2 relative">
           <img
@@ -21,8 +82,6 @@ const Login_2 = () => {
             alt="Animated Background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
-          </div>
         </div>
 
         {/* Right Side */}
@@ -38,25 +97,43 @@ const Login_2 = () => {
               : "Create your account to get started."}
           </p>
 
+          {message && (
+            <div className={`mb-4 text-sm ${message.includes("success") ? "text-green-600" : "text-red-500"}`}>
+              {message}
+            </div>
+          )}
+
           <form
             className="space-y-4"
-            onSubmit={isAdmin ? handleAdminLogin : (e) => e.preventDefault()}
+            onSubmit={
+              isAdmin
+                ? handleAdminLogin
+                : isLogin
+                ? handleUserLogin
+                : handleRegister
+            }
           >
             {!isLogin && !isAdmin && (
               <input
                 type="text"
                 placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             )}
             <input
               type="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
@@ -74,24 +151,31 @@ const Login_2 = () => {
 
             <button
               type="submit"
+              disabled={loading}
               className={`w-full py-2 rounded transition ${
                 isAdmin
                   ? "bg-red-500 text-white hover:bg-red-600"
                   : "bg-purple-600 text-white hover:bg-purple-700 mt-5 mb-8 rounded-lg"
               }`}
             >
-              {isAdmin ? "Login as Admin" : isLogin ? "Login" : "Create Account"}
+              {loading
+                ? "Processing..."
+                : isAdmin
+                ? "Login as Admin"
+                : isLogin
+                ? "Login"
+                : "Create Account"}
             </button>
           </form>
 
-              <div className="relative text-center my-6">
-                <span className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-gray-300"></span>
-                </span>
-                <span className="relative bg-white/70 px-2 text-sm text-gray-500">
-                  or {isLogin ? "login" : "register"} with
-                </span>
-              </div>
+          <div className="relative text-center my-6">
+            <span className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-gray-300"></span>
+            </span>
+            <span className="relative bg-white/70 px-2 text-sm text-gray-500">
+              or {isLogin ? "login" : "register"} with
+            </span>
+          </div>
 
           {!isAdmin && (
             <>
@@ -115,11 +199,8 @@ const Login_2 = () => {
               >
                 Admin Login
               </button>
-
             </>
           )}
-
-          
 
           {!isAdmin && (
             <div className="mt-4 text-center text-sm">

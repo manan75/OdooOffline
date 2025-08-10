@@ -15,12 +15,12 @@ import Dashboard2 from './components/DashBoard2'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   return (
     <>
       {/* <DashBoard/> */}
-      <Dashboard2/>
+     <Login_2/>
      {/* <Login_2/> */}
     </>
   )

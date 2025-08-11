@@ -112,7 +112,7 @@ const Login_2 = () => {
           <h3 className="text-3xl font-semibold text-gray-800 mb-1">
             {isAdmin ? "Admin Login" : isLogin ? "Login" : "Register"}
           </h3>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-sm font-semibold text-gray-500 mb-6">
             {isAdmin
               ? "Enter your admin credentials to access the dashboard."
               : isLogin
@@ -157,13 +157,66 @@ const Login_2 = () => {
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
-            <input
-              type="text"
-              placeholder="City"
+            <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
+              className="w-full px-4 py-2 text-gray-700 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            >
+              <option value="">Select City</option>
+              <option value="Ahmedabad">Ahmedabad</option>
+              <option value="Amritsar">Amritsar</option>
+              <option value="Aurangabad">Aurangabad</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Bhopal">Bhopal</option>
+              <option value="Bhubaneswar">Bhubaneswar</option>
+              <option value="Chandigarh">Chandigarh</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Coimbatore">Coimbatore</option>
+              <option value="Dehradun">Dehradun</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Dhanbad">Dhanbad</option>
+              <option value="Durgapur">Durgapur</option>
+              <option value="Faridabad">Faridabad</option>
+              <option value="Ghaziabad">Ghaziabad</option>
+              <option value="Gorakhpur">Gorakhpur</option>
+              <option value="Guwahati">Guwahati</option>
+              <option value="Gwalior">Gwalior</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Indore">Indore</option>
+              <option value="Jabalpur">Jabalpur</option>
+              <option value="Jaipur">Jaipur</option>
+              <option value="Jalandhar">Jalandhar</option>
+              <option value="Jammu">Jammu</option>
+              <option value="Jamshedpur">Jamshedpur</option>
+              <option value="Kanpur">Kanpur</option>
+              <option value="Kochi">Kochi</option>
+              <option value="Kolkata">Kolkata</option>
+              <option value="Kota">Kota</option>
+              <option value="Lucknow">Lucknow</option>
+              <option value="Ludhiana">Ludhiana</option>
+              <option value="Madurai">Madurai</option>
+              <option value="Mangalore">Mangalore</option>
+              <option value="Meerut">Meerut</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Mysuru">Mysuru</option>
+              <option value="Nagpur">Nagpur</option>
+              <option value="Nashik">Nashik</option>
+              <option value="Noida">Noida</option>
+              <option value="Patna">Patna</option>
+              <option value="Prayagraj">Prayagraj</option>
+              <option value="Pune">Pune</option>
+              <option value="Raipur">Raipur</option>
+              <option value="Rajkot">Rajkot</option>
+              <option value="Ranchi">Ranchi</option>
+              <option value="Shillong">Shillong</option>
+              <option value="Shimla">Shimla</option>
+              <option value="Surat">Surat</option>
+              <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+              <option value="Vadodara">Vadodara</option>
+              <option value="Varanasi">Varanasi</option>
+              <option value="Visakhapatnam">Visakhapatnam</option>
+            </select>
+
             <input
               type="text"
               placeholder="Address"
@@ -190,7 +243,7 @@ const Login_2 = () => {
 
               
             {isLogin && !isAdmin && (
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between text-sm  text-gray-600 font-semibold">
                 <label className="flex items-center">
                   <input type="checkbox" className="mr-2" />
                   Remember Me
@@ -206,8 +259,8 @@ const Login_2 = () => {
               disabled={loading}
               className={`w-full py-2 rounded transition ${
                 isAdmin
-                  ? "bg-red-500 text-white hover:bg-red-600"
-                  : "bg-orange-600 text-white hover:bg-purple-700 mt-2 rounded-lg"
+                  ? "bg-orange-400 text-white hover:bg-orange-500 mt-2 rounded-lg"
+                  : "bg-orange-400 text-white hover:bg-orange-500 mt-2 rounded-lg"
               }`}
             >
               {loading
@@ -220,18 +273,20 @@ const Login_2 = () => {
             </button>
           </form>
 
+          {!isAdmin && isLogin &&
           <div className="relative text-center my-6">
             <span className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-gray-300"></span>
+              {/* <span className="w-full border-t border-gray-300"></span> */}
             </span>
-            <span className="relative bg-white/70 px-2 text-sm text-gray-500">
-              or {isLogin ? "login" : "register"} with
+            <span className="relative px-2 text-sm text-gray-600 font-semibold">
+              or {isLogin ? "login" : "register"} as
             </span>
           </div>
+          }
 
           {!isAdmin && isLogin &&(
             <>
-              <button
+              {/* <button
                 type="button"
                 className="w-full flex items-center justify-center gap-2 py-2 mb-4 border border-gray-300 rounded hover:bg-gray-100 transition"
               >
@@ -239,7 +294,7 @@ const Login_2 = () => {
                 <span className="text-sm text-gray-700">
                   {isLogin ? "Sign in with Google" : "Sign up with Google"}
                 </span>
-              </button>
+              </button> */}
 
               <button
                 type="button"
@@ -247,7 +302,7 @@ const Login_2 = () => {
                   setIsAdmin(true);
                   setIsLogin(true);
                 }}
-                className="w-full py-2 mb-4 border border-red-400 text-red-500 rounded hover:bg-red-50 transition"
+                className="w-full py-2 mb-4 bg-orange-400 text-white hover:bg-orange-500 mt-2 rounded-lg"
               >
                 Admin Login
               </button>
@@ -284,7 +339,7 @@ const Login_2 = () => {
             <div className="mt-4 text-center text-sm">
               <button
                 onClick={() => setIsAdmin(false)}
-                className="text-gray-600 hover:underline"
+                className="text-purple-600 hover:underline"
               >
                 Back to User Login
               </button>

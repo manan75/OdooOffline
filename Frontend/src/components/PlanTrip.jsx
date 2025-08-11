@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Navbar from "./Navbar.jsx";
+import Navbar from "./navbar.jsx";
 import { AppContent } from "../Context/AppContext.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

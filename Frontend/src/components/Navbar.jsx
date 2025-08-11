@@ -1,14 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { Sun, Moon, Menu, X, Home, Users, Compass } from "lucide-react";
-import { Link } from "react-router-dom"; // ✅ Import Link
+import React, { useState, useEffect, useContext } from "react";
+import { Sun, Moon, Menu, X, Home, Users, Compass, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import axios from "axios";
+import { AppContent } from "../Context/AppContext.jsx"; // Assuming you have this context for backendURL
 
 const Navbar = () => {
+  const { backendURL } = useContext(AppContent);
+  const navigate = useNavigate();
+
   const [darkMode, setDarkMode] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${backendURL}/api/auth/logout`, {}, { withCredentials: true }); // call logout API, send cookies
+      navigate("/");
+    } catch (err) {
+      console.error("Logout failed", err);
+      alert("Failed to logout");
+    }
+  };
 
   return (
     <>
@@ -28,8 +43,8 @@ const Navbar = () => {
           <span className="text-xl font-semibold text-white">MyApp</span>
         </div>
 
-        {/* Right: Nav Buttons + User Image */}
-        <div className="flex items-center gap-10 text-white">
+        {/* Right: Nav Buttons + User Image + Logout */}
+        <div className="flex items-center gap-6 text-white">
           <Link
             to="/landingPage"
             className="flex items-center gap-2 hover:scale-105 transition-transform"
@@ -38,13 +53,12 @@ const Navbar = () => {
           </Link>
 
           <Link
-            to="/community"
+            to="/testCommunity"
             className="flex items-center gap-2 hover:scale-105 transition-transform"
           >
             <Users size={20} /> Community
           </Link>
 
-          {/* ✅ New Travel Dashboard link */}
           <Link
             to="/travelDashboard"
             className="flex items-center gap-2 hover:scale-105 transition-transform"
@@ -57,6 +71,16 @@ const Navbar = () => {
             alt="User"
             className="w-8 h-8 rounded-full border border-white/30"
           />
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-1 bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white font-semibold transition"
+            title="Logout"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
         </div>
       </nav>
 
@@ -75,7 +99,6 @@ const Navbar = () => {
             <li className="flex items-center gap-2">
               <Users size={18} /> Community
             </li>
-            {/* ✅ Travel Dashboard link in sidebar too */}
             <li className="flex items-center gap-2">
               <Compass size={18} /> Travel Dashboard
             </li>

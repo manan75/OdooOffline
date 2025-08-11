@@ -10,6 +10,7 @@ import PlanTrip from './components/PlanTrip.jsx';
 import TravelPlanner from './components/Itinerary.jsx';
 import TravelDashboard from './components/UserDashBoard.jsx';
 import TripDetailsPage from './components/TripDetails.jsx';
+import CommunityPage from './components/TestCommunity.jsx';
 
 
 
@@ -25,7 +26,7 @@ function App() {
           <Route path='/travelPlanner' element={<TravelPlanner/>}/>
           <Route path='/travelDashboard' element={<TravelDashboard/>}/>
            <Route path="/tripDetails/:tripId" element={<TripDetailsPage />} />
-          
+           <Route path="/testCommunity" element={<CommunityPage/>} />
       </Routes>
     </Router>
   )

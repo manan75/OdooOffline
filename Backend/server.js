@@ -10,6 +10,8 @@ import userRouter from './Routes/userRoutes.js'
 import db from './Config/db.js'
 import searchRouter from './Routes/searchRoutes.js'
 import tripRouter from './Routes/tripRoutes.js'
+import communityRouter from './Routes/communityRoutes.js'
+
 
 
 
@@ -32,6 +34,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/trips', tripRouter);
+app.use('/api/community',communityRouter);
 
 
 

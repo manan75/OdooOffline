@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { AppContent } from "../Context/AppContext";
 import { MapPin, Calendar, User, PlusCircle, XCircle } from "lucide-react";
-import Navbar from "./Navbar.jsx";
-
+import Navbar from "./navbar.jsx";
 
 function CommunityPage() {
   const [posts, setPosts] = useState([]);
@@ -15,10 +14,15 @@ function CommunityPage() {
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
 
+  // New state for sorting and filtering
+  const [sortOrder, setSortOrder] = useState("newest"); // "newest" or "oldest"
+  const [reviewFilter, setReviewFilter] = useState(0); // Minimum number of likes
+
   const { backendURL, userData } = useContext(AppContent);
 
   useEffect(() => {
     fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchPosts = async () => {
@@ -35,7 +39,9 @@ function CommunityPage() {
 
   const fetchUserTrips = async () => {
     try {
-      const res = await axios.get(`${backendURL}/api/trips/getTrips/${userData.userId}`);
+      const res = await axios.get(
+        `${backendURL}/api/trips/getTrips/${userData.userId}`
+      );
       setUserTrips(res.data);
       setError(null);
     } catch {
@@ -63,126 +69,152 @@ function CommunityPage() {
       setSuccessMsg("Post created successfully!");
       setShowCreatePost(false);
       setSelectedTripId(null);
-      fetchPosts();
+      fetchPosts(); // Refetch posts to include the new one
     } catch {
       setError("Failed to create post.");
     }
     setCreatingPost(false);
   };
 
+  // Memoized derivation of posts to display
+  const filteredAndSortedPosts = useMemo(() => {
+    return posts
+      .filter((post) => (post.likes ?? 0) >= reviewFilter)
+      .sort((a, b) => {
+        const dateA = new Date(a.start_date);
+        const dateB = new Date(b.start_date);
+        return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
+      });
+  }, [posts, sortOrder, reviewFilter]);
+
   return (
-    <><Navbar/>
-   <div className="min-h-screen bg-purple-300 p-6 pt-20 mx-auto">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-[#006694] to-[#70A9CB] p-6 pt-20 mx-auto">
+        {/* Header */}
+        <header className="mb-8 flex items-center justify-between flex-wrap gap-4">
+          <h1 className="text-4xl font-extrabold text-white drop-shadow-md">
+            Community
+          </h1>
+          <button
+            onClick={handleCreatePostClick}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md transition"
+          >
+            <PlusCircle size={20} /> Create Post
+          </button>
+        </header>
 
-      {/* Header */}
-      <header className="mb-8 flex items-center justify-between">
-        <h1 className="text-4xl font-extrabold text-gray-900 drop-shadow-md">Community</h1>
-        <button
-          onClick={handleCreatePostClick}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md transition"
-        >
-          <PlusCircle size={20} /> Create Post
-        </button>
-      </header>
-
-      {/* Success / Error messages */}
-      {error && (
-        <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-md shadow-inner">{error}</div>
-      )}
-      {successMsg && (
-        <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-md shadow-inner">{successMsg}</div>
-      )}
-
-      {/* Posts Section */}
-      {loadingPosts ? (
-        <p className="text-gray-700 text-center">Loading posts...</p>
-      ) : posts.length === 0 ? (
-        <p className="text-center text-gray-600 italic">No posts yet. Be the first to create one!</p>
-      ) : (
-        <div className="space-y-6">
-          {posts.map((post) => (
-            <div
-              key={post.post_id}
-              className="bg-white rounded-2xl shadow-lg p-6 cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-transform duration-300"
-              aria-label={`Post about ${post.trip_name} by ${post.user_name}`}
+        {/* Filter and Sort Controls */}
+        <div className="mb-6 flex flex-wrap items-center gap-4 p-4 bg-white/30 rounded-xl shadow">
+          {/* Filter by Likes */}
+          <div className="flex items-center gap-2">
+            <label htmlFor="review-filter" className="font-semibold text-gray-800">
+              Filter by Likes:
+            </label>
+            <select
+              id="review-filter"
+              value={reviewFilter}
+              onChange={(e) => setReviewFilter(Number(e.target.value))}
+              className="rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
             >
-              <div className="flex items-center gap-4 mb-3">
-                <div className="bg-gradient-to-br from-blue-500 to-purple-600 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg uppercase shadow">
-                  {post.user_name.charAt(0)}
-                </div>
-                <div>
-                  <p className="font-semibold text-lg text-gray-900">{post.trip_name}</p>
-                  <p className="text-sm text-gray-600 flex items-center gap-1">
-                    <User size={14} /> {post.user_name}
-                    <span className="mx-1">•</span>
-                    <MapPin size={14} /> {post.description ? post.description.split(",")[0] : "Trip"}
-                  </p>
-                </div>
-              </div>
+              <option value={0}>All Posts</option>
+              <option value={10}>10+ Likes</option>
+              <option value={50}>50+ Likes</option>
+              <option value={100}>100+ Likes</option>
+            </select>
+          </div>
 
-              <p className="text-gray-800 mb-3 line-clamp-3">{post.description || "No description provided."}</p>
-
-              <div className="flex items-center gap-6 text-gray-500 text-sm">
-                <div className="flex items-center gap-1">
-                  <Calendar size={16} />
-                  <span>{new Date(post.start_date).toLocaleDateString()}</span>
-                  <span>-</span>
-                  <span>{new Date(post.end_date).toLocaleDateString()}</span>
-                </div>
-
-                <div className="font-semibold text-gray-700">{post.likes ?? 0} Likes</div>
-              </div>
-            </div>
-          ))}
+          {/* Sort by Date */}
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort-order" className="font-semibold text-gray-800">
+              Sort by:
+            </label>
+            <select
+              id="sort-order"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              className="rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+          </div>
         </div>
-      )}
 
-      {/* Create Post Modal */}
-      {showCreatePost && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-xl relative">
-            <button
-              onClick={() => {
-                setShowCreatePost(false);
-                setSelectedTripId(null);
-                setError(null);
-                setSuccessMsg(null);
-              }}
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition"
-              aria-label="Close create post form"
-            >
-              <XCircle size={28} />
-            </button>
-            <h2 className="text-2xl font-bold mb-4">Select a Trip to Post About</h2>
 
-            {userTrips.length === 0 ? (
-              <p className="text-gray-600 italic">You have no trips to post about.</p>
-            ) : (
-              <select
-                className="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={selectedTripId || ""}
-                onChange={(e) => setSelectedTripId(e.target.value)}
+        {/* Success / Error messages */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-md shadow-inner">
+            {error}
+          </div>
+        )}
+        {successMsg && (
+          <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-md shadow-inner">
+            {successMsg}
+          </div>
+        )}
+
+        {/* Posts Section */}
+        {loadingPosts ? (
+          <p className="text-gray-700 text-center">Loading posts...</p>
+        ) : posts.length === 0 ? (
+          <p className="text-center text-white italic">
+            No posts yet. Be the first to create one!
+          </p>
+        ) : filteredAndSortedPosts.length === 0 ? (
+          <p className="text-center text-white italic">
+            No posts match your current filters.
+          </p>
+        ) : (
+          <div className="space-y-6">
+            {filteredAndSortedPosts.map((post) => (
+              <div
+                key={post.post_id}
+                className="bg-white rounded-2xl shadow-lg p-6 cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-transform duration-300"
+                aria-label={`Post about ${post.trip_name} by ${post.user_name}`}
               >
-                <option value="" disabled>
-                  -- Select a Trip --
-                </option>
-                {userTrips.map((trip) => (
-                  <option key={trip.trip_id} value={trip.trip_id}>
-                    {trip.trip_name} ({new Date(trip.start_date).toLocaleDateString()} -{" "}
-                    {new Date(trip.end_date).toLocaleDateString()})
-                  </option>
-                ))}
-              </select>
-            )}
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="bg-gradient-to-br from-blue-500 to-purple-600 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg uppercase shadow">
+                    {post.user_name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg text-gray-900">
+                      {post.trip_name}
+                    </p>
+                    <p className="text-sm text-gray-600 flex items-center gap-1">
+                      <User size={14} /> {post.user_name}
+                      <span className="mx-1">•</span>
+                      <MapPin size={14} />{" "}
+                      {post.description ? post.description.split(",")[0] : "Trip"}
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={handlePostSubmit}
-                disabled={creatingPost}
-                className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-semibold disabled:opacity-50"
-              >
-                {creatingPost ? "Creating..." : "Create Post"}
-              </button>
+                <p className="text-gray-800 mb-3 line-clamp-3">
+                  {post.description || "No description provided."}
+                </p>
+
+                <div className="flex items-center gap-6 text-gray-500 text-sm">
+                  <div className="flex items-center gap-1">
+                    <Calendar size={16} />
+                    <span>{new Date(post.start_date).toLocaleDateString()}</span>
+                    <span>-</span>
+                    <span>{new Date(post.end_date).toLocaleDateString()}</span>
+                  </div>
+
+                  <div className="font-semibold text-gray-700">
+                    {post.likes ?? 0} Likes
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Create Post Modal */}
+        {showCreatePost && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50 p-4">
+            <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-xl relative">
               <button
                 onClick={() => {
                   setShowCreatePost(false);
@@ -190,15 +222,61 @@ function CommunityPage() {
                   setError(null);
                   setSuccessMsg(null);
                 }}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-5 py-2 rounded-lg font-semibold"
+                className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition"
+                aria-label="Close create post form"
               >
-                Cancel
+                <XCircle size={28} />
               </button>
+              <h2 className="text-2xl font-bold mb-4">
+                Select a Trip to Post About
+              </h2>
+
+              {userTrips.length === 0 ? (
+                <p className="text-gray-600 italic">
+                  You have no trips to post about.
+                </p>
+              ) : (
+                <select
+                  className="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={selectedTripId || ""}
+                  onChange={(e) => setSelectedTripId(e.target.value)}
+                >
+                  <option value="" disabled>
+                    -- Select a Trip --
+                  </option>
+                  {userTrips.map((trip) => (
+                    <option key={trip.trip_id} value={trip.trip_id}>
+                      {trip.trip_name} ({new Date(trip.start_date).toLocaleDateString()}{" "}
+                      - {new Date(trip.end_date).toLocaleDateString()})
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={handlePostSubmit}
+                  disabled={!selectedTripId || creatingPost}
+                  className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {creatingPost ? "Creating..." : "Create Post"}
+                </button>
+                <button
+                  onClick={() => {
+                    setShowCreatePost(false);
+                    setSelectedTripId(null);
+                    setError(null);
+                    setSuccessMsg(null);
+                  }}
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-5 py-2 rounded-lg font-semibold"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </>
   );
 }

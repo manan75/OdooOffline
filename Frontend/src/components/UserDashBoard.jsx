@@ -2,10 +2,11 @@ import { useState } from "react";
 import { MapPin, Plane, Calendar, Settings, ChevronLeft, ChevronRight } from "lucide-react";
 
 import MyTrips from "./Mytrips";
-import UserCalender from "./userCalender";
+
 import SettingsPage from "./SettingsPage";
 import Navbar from "./navbar.jsx";
 import Dashboard from "./userDash.jsx";
+import SimpleTripsCalendar from "./Calender.jsx";
 
 
 
@@ -14,7 +15,7 @@ export default function TravelDashboard() {
   const sidebarItems = [
     { icon: MapPin, label: "Dashboard" },
     { icon: Plane, label: "My Trips" },
-    { icon: Calendar, label: "Itinerary" },
+    { icon: Calendar, label: "Calender" },
     { icon: Settings, label: "Settings" },
   ];
 
@@ -22,7 +23,7 @@ export default function TravelDashboard() {
     switch (activeTab) {
       case "Dashboard": return <Dashboard />;
       case "My Trips": return <MyTrips />;
-      case "Calender": return <UserCalender/>;
+      case "Calender": return <SimpleTripsCalendar/>;
       case "Settings": return <SettingsPage />;
       default: return <Dashboard />;
     }

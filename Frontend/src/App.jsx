@@ -9,14 +9,13 @@ import LandingPage from './components/LandingPage.jsx';
 import PlanTrip from './components/PlanTrip.jsx';
 import TravelPlanner from './components/Itinerary.jsx';
 import TravelDashboard from './components/UserDashBoard.jsx';
-import Calender from './components/Calendar.jsx'
-import CommunityPage from './components/Community.jsx';
-import TravelAdminDashboard from './components/AdminDashBoard.jsx';
+import TripDetailsPage from './components/TripDetails.jsx';
+import CommunityPage from './components/TestCommunity.jsx';
+
 
 
 function App() {
  
-
   return (
     <Router>
       <Routes>
@@ -26,9 +25,8 @@ function App() {
           <Route path='/planTrip' element={<PlanTrip/>}/>
           <Route path='/travelPlanner' element={<TravelPlanner/>}/>
           <Route path='/travelDashboard' element={<TravelDashboard/>}/>
-          <Route path='/calender' element={<Calender/>}/>
-          <Route path='/community' element={<CommunityPage/>}/>
-          <Route path='/travelAdmin' element={<TravelAdminDashboard/>}/>
+           <Route path="/tripDetails/:tripId" element={<TripDetailsPage />} />
+           <Route path="/testCommunity" element={<CommunityPage/>} />
       </Routes>
     </Router>
   )

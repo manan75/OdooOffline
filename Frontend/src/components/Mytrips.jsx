@@ -1,7 +1,9 @@
+
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { MapPin } from "lucide-react";
 import { AppContent } from "../Context/AppContext";
+import { Link } from "react-router-dom";
 
 export default function MyTrips() {
   const { backendURL, userData } = useContext(AppContent);
@@ -63,14 +65,15 @@ export default function MyTrips() {
                 </p>
               </div>
 
-              <button
+          <Link to={`/tripDetails/${trip.trip_id}`}>  <button
                 type="button"
                 className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600
                            text-white px-5 py-2 rounded-lg font-semibold transition-colors shadow-md"
-                onClick={() => alert(`See details for trip: ${trip.trip_name}`)}
+              
               >
                 See Details
               </button>
+              </Link>
             </div>
           ))}
         </div>

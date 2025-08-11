@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { getCitiesWithActivities } from "../Controllers/searchController.js";
+import { getCitiesWithActivities, getTopCities, searchCities, getActivitiesByCity } from "../Controllers/searchController.js";
 
 
 const searchRouter = Router();
 
-searchRouter.get('/searchall', getCitiesWithActivities);
+searchRouter.get('/search', getCitiesWithActivities);
+searchRouter.get('/top-cities', getTopCities);
+searchRouter.get('/cities', searchCities);
+searchRouter.get('/getactivities/:cityId', getActivitiesByCity);
 
 export default searchRouter;

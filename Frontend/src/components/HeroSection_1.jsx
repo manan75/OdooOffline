@@ -1,8 +1,13 @@
 import React from "react";
 import Navbar from "./navbar";
 import { Search } from "lucide-react";
+import { AppContent } from "../Context/AppContext";
+import { useContext } from "react";
+
 
 export default function HeroSection_1() {
+
+  const {userData} = useContext(AppContent);
   return (
     <>
       <Navbar />
@@ -22,7 +27,7 @@ export default function HeroSection_1() {
           {/* Text Content */}
           <div className="relative z-10 flex flex-col justify-center h-full px-8 md:px-12 text-white">
             <h1 className="text-4xl md:text-5xl font-bold max-w-2xl mb-4">
-              Enjoy your Dream Vacation
+              Hello {userData ? userData.username : 'Developer'}  Enjoy your Dream Vacation
             </h1>
             <p className="max-w-lg text-gray-200">
               Book Hotels, Flights, and Stay packages at the lowest price.

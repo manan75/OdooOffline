@@ -9,6 +9,7 @@ import authRouter from './Routes/authRoutes.js'
 import userRouter from './Routes/userRoutes.js'
 import db from './Config/db.js'
 import searchRouter from './Routes/searchRoutes.js'
+import tripRouter from './Routes/tripRoutes.js'
 
 
 
@@ -27,10 +28,12 @@ app.use(cookieParser())
 
 
 //API's
-
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/trips', tripRouter);
+
+
 
 app.get('/', (req, res) => res.send('StackIt API is running'))
 

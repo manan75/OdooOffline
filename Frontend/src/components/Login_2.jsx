@@ -11,6 +11,9 @@ const Login_2 = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -137,7 +140,7 @@ const Login_2 = () => {
                 : handleRegister
             }
           >
-            {!isLogin && !isAdmin && (
+            {!isLogin && !isAdmin && (<>
               <input
                 type="text"
                 placeholder="Full Name"
@@ -145,6 +148,30 @@ const Login_2 = () => {
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
+
+              <input
+              type="number"
+              placeholder="Mobile"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+
+            <input
+              type="text"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+            <input
+              type="text"
+              placeholder="Country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+</>
             )}
             <input
               type="email"
@@ -161,6 +188,7 @@ const Login_2 = () => {
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
+              
             {isLogin && !isAdmin && (
               <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center">
@@ -201,7 +229,7 @@ const Login_2 = () => {
             </span>
           </div>
 
-          {!isAdmin && (
+          {!isAdmin && isLogin &&(
             <>
               <button
                 type="button"

@@ -118,22 +118,7 @@ export default function TravelDashboard() {
                   <h3 className="text-xl font-bold mb-4">Preplanned Trips</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     {prePlannedTrips.map((trip, index) => (
-                      <div key={index} className=" rounded-lg p-6 relative shadow-md hover:shadow-lg">
                         <Card key={index} image={trip.image}/>
-                        {/* <div className="text-4xl mb-4 text-center">{trip.image}</div>
-                        <div className="text-center">
-                          <h4 className="font-semibold mb-2">{trip.destination}</h4>
-                          <p className="text-sm text-gray-400 mb-2">{trip.date}</p>
-                          <p className="text-xs text-gray-500 mb-4">{trip.type}</p> */}
-                          <button className="bg-blue-600 mt-3 hover:bg-blue-500 px-4 py-2 rounded text-lg text-white transition-colors">
-                            View
-                          </button>
-                          </div>
-                        // {index === 2 && (
-                          //   <div className="absolute top-2 right-2">
-                          //     <span className="bg-green-600 px-2 py-1 rounded text-xs">Acclaimed Hamster</span>
-                          //   </div>
-                          // )}
                     ))}
                   </div>
                 </div>
@@ -143,23 +128,24 @@ export default function TravelDashboard() {
                   <h3 className="text-xl font-bold mb-4">Previous Trips</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {previousTrips.map((trip, index) => (
-                      <div key={index} className="bg-gray-100 rounded-lg p-6 relative shadow-md hover:shadow-lg">
-                        <div className="text-4xl mb-4 text-center">{trip.image}</div>
-                        <div className="text-center">
-                          <h4 className="font-semibold mb-2">{trip.destination}</h4>
-                          <p className="text-sm text-gray-400 mb-2">{trip.date}</p>
-                          <p className="text-xs text-gray-500 mb-2">{trip.type}</p>
-                          <p className="text-yellow-400 mb-4">{trip.rating}</p>
-                          <button className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-lg text-white transition-colors">
-                            View
-                          </button>
-                        </div>
-                        {index === 2 && (
-                          <div className="absolute top-2 right-2">
-                            <span className="bg-green-600 px-2 py-1 rounded text-xs">Great Stingray</span>
-                          </div>
-                        )}
-                      </div>
+                      // <div key={index} className="bg-gray-100 rounded-lg p-6 relative shadow-md hover:shadow-lg">
+                      //   <div className="text-4xl mb-4 text-center">{trip.image}</div>
+                      //   <div className="text-center">
+                      //     <h4 className="font-semibold mb-2">{trip.destination}</h4>
+                      //     <p className="text-sm text-gray-400 mb-2">{trip.date}</p>
+                      //     <p className="text-xs text-gray-500 mb-2">{trip.type}</p>
+                      //     <p className="text-yellow-400 mb-4">{trip.rating}</p>
+                      //     <button className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-lg text-white transition-colors">
+                      //       View
+                      //     </button>
+                      //   </div>
+                      //   {index === 2 && (
+                      //     <div className="absolute top-2 right-2">
+                      //       <span className="bg-green-600 px-2 py-1 rounded text-xs">Great Stingray</span>
+                      //     </div>
+                      //   )}
+                      // </div>
+                      <Card key={index} image={trip.image}/>
                     ))}
                   </div>
                 </div>
@@ -176,24 +162,24 @@ export default function TravelDashboard() {
       case 'Settings':
         return (
           <div className="p-8">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Travel Settings</h2>
+            <h2 className="text-2xl font-bold mb-6 text-black">Travel Settings</h2>
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="space-y-6">
-                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-4 p-4 bg-gray-100 hover:bg-gray-200 rounded-lg">
                   <User className="w-5 h-5 text-gray-600" />
                   <div>
                     <h3 className="font-semibold">Profile Settings</h3>
                     <p className="text-sm text-gray-600">Update your personal information and preferences</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-4 p-4 bg-gray-100 hover:bg-gray-200 rounded-lg">
                   <Bell className="w-5 h-5 text-gray-600" />
                   <div>
                     <h3 className="font-semibold">Travel Notifications</h3>
                     <p className="text-sm text-gray-600">Manage trip alerts and booking confirmations</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-4 p-4 bg-gray-100 hover:bg-gray-200 rounded-lg">
                   <Shield className="w-5 h-5 text-gray-600" />
                   <div>
                     <h3 className="font-semibold">Privacy & Security</h3>

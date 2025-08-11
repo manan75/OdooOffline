@@ -3,9 +3,10 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
-import connectDB from './Config/db.js'
+
 import authRouter from './Routes/authRoutes.js'
 import userRouter from './Routes/userRoutes.js'
+import db from './Config/db.js'
 
 
 
@@ -19,7 +20,7 @@ app.use(cors({
   credentials: true, 
 }));
 app.use(express.json())
-connectDB();
+
 app.use(cookieParser())
 
 

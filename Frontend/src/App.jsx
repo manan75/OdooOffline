@@ -23,7 +23,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Login_2/>}/>
-         <Route path='/userHome' element={<HeroSection/>}/>
+         <Route path='/userHome' element={<HeroSection_1/>}/>
           
       </Routes>
     </Router>

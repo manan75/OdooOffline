@@ -1,40 +1,39 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import User from '../Models/userSchema.js'
-import adminSchema from '../Models/adminSchema.js';
+import db from "../Config/db.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 
-// Register a new user
 export const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, address, city } = req.body;
 
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !address || !city) {
     return res.json({ success: false, message: "Missing details" });
   }
 
   try {
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    //  Check if user exists
+    const [existingUser] = await db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email]
+    );
+    if (existingUser.length > 0) {
       return res.json({ success: false, message: "User already exists" });
     }
 
-    // Hash password
+    //  Hash the password
     const hashPassword = await bcrypt.hash(password, 10);
 
-    // Create and save new user
-    const newUser = new User({
-      name,
-      email,
-      password: hashPassword,
-    });
-
-    await newUser.save();
+    //  Insert new user
+    const [result] = await db.query(
+      `INSERT INTO users (name, email, password_hash, address, city, role)
+       VALUES (?, ?, ?, ?, ?, 'user')`,
+      [name, email, hashPassword, address, city]
+    );
 
     return res.json({
       success: true,
       message: "User registered successfully",
-      userId: newUser._id,
+      userId: result.insertId,
     });
   } catch (error) {
     console.error("Error during registration:", error);
@@ -42,7 +41,6 @@ export const register = async (req, res) => {
   }
 };
 
-// Login logic
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -51,45 +49,50 @@ export const login = async (req, res) => {
   }
 
   try {
-    // Explicitly select password field because it's hidden by default
-    const user = await User.findOne({ email }).select('+password');
+    //  Check if user exists in MySQL
+    const [rows] = await db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email]
+    );
 
-    if (!user) {
+    if (rows.length === 0) {
       return res.json({ success: false, message: "User not found" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const user = rows[0];
 
+    //  Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
       return res.json({ success: false, message: "Invalid password" });
     }
 
-    // Generate JWT token
+    //  Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { userId: user.user_id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
     );
 
-    res.cookie('token', token, {
+    // 4️⃣ Send token as cookie
+    res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // change to true if using HTTPS in production
-      sameSite: 'Lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: false, // set true in production with HTTPS
+      sameSite: "Lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     return res.json({
       success: true,
       message: "Login successful",
       token,
-      userId: user._id,
+      userId: user.user_id,
     });
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
 
 // Logout logic
 export const logout = (req, res) => {

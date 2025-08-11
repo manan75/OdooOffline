@@ -9,12 +9,12 @@ import LandingPage from './components/LandingPage.jsx';
 import PlanTrip from './components/PlanTrip.jsx';
 import TravelPlanner from './components/Itinerary.jsx';
 import TravelDashboard from './components/UserDashBoard.jsx';
-import Calender from './components/Calendar.jsx'
+import TripDetailsPage from './components/TripDetails.jsx';
+
 
 
 function App() {
  
-
   return (
     <Router>
       <Routes>
@@ -24,7 +24,8 @@ function App() {
           <Route path='/planTrip' element={<PlanTrip/>}/>
           <Route path='/travelPlanner' element={<TravelPlanner/>}/>
           <Route path='/travelDashboard' element={<TravelDashboard/>}/>
-          <Route path='/calender' element={<Calender/>}/>
+           <Route path="/tripDetails/:tripId" element={<TripDetailsPage />} />
+          
       </Routes>
     </Router>
   )

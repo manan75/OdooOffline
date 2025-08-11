@@ -8,6 +8,8 @@ import Login_2 from './components/Login_2.jsx'
 import LandingPage from './components/LandingPage.jsx';
 import PlanTrip from './components/PlanTrip.jsx';
 import TravelPlanner from './components/Itinerary.jsx';
+import TravelDashboard from './components/UserDashBoard.jsx';
+import Calender from './components/Calendar.jsx'
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
          <Route path='/landingPage' element={<LandingPage/>}/>
           <Route path='/planTrip' element={<PlanTrip/>}/>
           <Route path='/travelPlanner' element={<TravelPlanner/>}/>
+          <Route path='/travelDashboard' element={<TravelDashboard/>}/>
+          <Route path='/calender' element={<Calender/>}/>
       </Routes>
     </Router>
   )

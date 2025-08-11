@@ -1,10 +1,14 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AppContent } from "../Context/AppContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from "./Navbar.jsx";
+
+
 
 export default function TravelPlanner() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { tripName, startDate, endDate, tripId } = location.state || {};
   const { backendURL } = useContext(AppContent);
 
@@ -119,8 +123,8 @@ export default function TravelPlanner() {
         const destDate = new Date(tripStart);
         destDate.setDate(destDate.getDate() + i);
 
-        // 1️⃣ Insert into trip_destinations
-        const destRes = await axios.post(`${backendURL}/api/trip/destinations`, {
+        // 1️ Insert into trip_destinations
+        const destRes = await axios.post(`${backendURL}/api/trips/tripDestinations`, {
           trip_id: tripId,
           city_id: plan.city.city_id,
           dest_date: destDate.toISOString().split("T")[0], // YYYY-MM-DD
@@ -128,16 +132,18 @@ export default function TravelPlanner() {
 
         const trip_dest_id = destRes.data.trip_dest_id;
 
-        // 2️⃣ Insert activities for this destination
+        // 2 Insert activities for this destination
         for (const act of plan.selectedActivities) {
-          await axios.post(`${backendURL}/api/trip/activities`, {
+          await axios.post(`${backendURL}/api/trips/tripActivities`, {
             trip_dest_id,
             activity_id: act.activity_id,
           });
         }
       }
 
-      alert("✅ Trip plan saved successfully!");
+      alert("Trip plan saved successfully!");
+      navigate('/travelDashboard');
+
     } catch (err) {
       console.error("❌ Error saving trip:", err);
       alert("Failed to save trip plan.");
@@ -145,6 +151,8 @@ export default function TravelPlanner() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-cover bg-center relative flex justify-center items-center p-6">
       <img
         src="https://i.pinimg.com/1200x/53/b3/bc/53b3bc64567c1f1d0e01154f0676dd72.jpg"
@@ -257,5 +265,6 @@ export default function TravelPlanner() {
         </div>
       </div>
     </div>
+    </>
   );
 }

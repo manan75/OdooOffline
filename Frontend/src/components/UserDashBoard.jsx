@@ -31,7 +31,7 @@ export default function TravelDashboard() {
   return (
     <>
       <Navbar />
-      <div className="max-w-screen min-h-screen p-20 mx-auto bg-gradient-to-br from-blue-900 via-purple-900 to-teal-900">
+      <div className="max-w-screen min-h-screen p-20 mx-auto bg-gradient-to-br from-[#006694] to-[#70A9CB]">
         <div className="flex flex-col lg:flex-row">
           
           {/* Sidebar */}

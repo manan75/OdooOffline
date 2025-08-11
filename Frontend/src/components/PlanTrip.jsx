@@ -54,7 +54,11 @@ export default function PlanTrip() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen flex items-center justify-center p-6 pt-21 bg-gradient-to-br from-[#FFC5D3] to-[#006994]">
+      <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#006694] to-[#70A9CB] p-6 pt-21">
+              {/* <div className="absolute inset-0 bg-gradient-to-r from-sky-300 via-blue-200 to-[#006694]">
+        <div className="absolute inset-0 bg-gradient-to-t from-sky-400/20 via-sky-200/15 to-[#4A93BE]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-transparent to-sky-100/40"></div>
+      </div> */}
         <div className="glass bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg w-full max-w-4xl p-8">
           <h1 className="text-white text-3xl font-bold mb-6 text-center">
             Plan a New Trip
@@ -136,7 +140,7 @@ export default function PlanTrip() {
 
             <button
               type="submit"
-              className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-lg transition duration-300"
+              className="w-full mt-4 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg shadow-lg transition duration-300"
             >
               Create Trip
             </button>

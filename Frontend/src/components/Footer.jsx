@@ -3,7 +3,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-blue-600 to-blue-500 text-white mt-12">
+    <footer className="bg-blue-800 text-white mt-12">
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Brand */}
         <div>
@@ -49,7 +49,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="bg-blue-700 py-4 text-center text-sm text-blue-100">
+      <div className="bg-blue-900 py-4 text-center text-sm text-blue-100">
         © {new Date().getFullYear()} GlobeTrotter. All rights reserved.
       </div>
     </footer>

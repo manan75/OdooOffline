@@ -10,6 +10,8 @@ import PlanTrip from './components/PlanTrip.jsx';
 import TravelPlanner from './components/Itinerary.jsx';
 import TravelDashboard from './components/UserDashBoard.jsx';
 import Calender from './components/Calendar.jsx'
+import CommunityPage from './components/Community.jsx';
+import TravelAdminDashboard from './components/AdminDashBoard.jsx';
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route path='/travelPlanner' element={<TravelPlanner/>}/>
           <Route path='/travelDashboard' element={<TravelDashboard/>}/>
           <Route path='/calender' element={<Calender/>}/>
+          <Route path='/community' element={<CommunityPage/>}/>
+          <Route path='/travelAdmin' element={<TravelAdminDashboard/>}/>
       </Routes>
     </Router>
   )

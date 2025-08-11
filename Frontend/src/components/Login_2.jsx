@@ -96,23 +96,23 @@ const Login_2 = () => {
       className="min-h-screen flex justify-between items-center bg-cover bg-center"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80')",
+          "url('https://i.pinimg.com/1200x/ae/8e/f9/ae8ef98e6749426c59b39266bd672e47.jpg')",
       }}
     >
        {/* Text block */}
       <div className="max-w-lg text-black space-y-4 ml-40">
         <h1 className="text-3xl font-bold">Global Trotter</h1>
         <h2 className="text-5xl font-bold">EXPLORE HORIZONS</h2>
-        <h3 className="text-2xl">Where Your Dream Destinations Become Reality.</h3>
-        <h3 className="text-2xl">Embark on a journey where every corner of the world is within your reach.</h3>
+        <h3 className="text-2xl font-semibold">Where Your Dream Destinations Become Reality.</h3>
+        <h3 className="text-2xl font-semibold">Embark on a journey where every corner of the world is within your reach.</h3>
       </div>
       <div className="flex w-full max-w-lg rounded-xl overflow-hidden shadow-lg border-2 border-white mr-50">
 
         <div className="w-full p-8 bg-gray/100 backdrop-blur-sm">
-          <h3 className="text-3xl font-semibold text-gray-800 mb-1">
+          <h3 className="text-3xl font-semibold text-white mb-1">
             {isAdmin ? "Admin Login" : isLogin ? "Login" : "Register"}
           </h3>
-          <p className="text-sm font-semibold text-gray-500 mb-6">
+          <p className="text-sm font-semibold text-white mb-6">
             {isAdmin
               ? "Enter your admin credentials to access the dashboard."
               : isLogin
@@ -243,7 +243,7 @@ const Login_2 = () => {
 
               
             {isLogin && !isAdmin && (
-              <div className="flex items-center justify-between text-sm  text-gray-600 font-semibold">
+              <div className="flex items-center justify-between text-sm  text-gray-600">
                 <label className="flex items-center">
                   <input type="checkbox" className="mr-2" />
                   Remember Me
@@ -259,8 +259,8 @@ const Login_2 = () => {
               disabled={loading}
               className={`w-full py-2 rounded transition ${
                 isAdmin
-                  ? "bg-orange-400 text-white hover:bg-orange-500 mt-2 rounded-lg"
-                  : "bg-orange-400 text-white hover:bg-orange-500 mt-2 rounded-lg"
+                  ? "bg-blue-500 text-white hover:bg-blue-600 mt-2 rounded-lg"
+                  : "bg-blue-500 text-white hover:bg-blue-600 mt-2 rounded-lg"
               }`}
             >
               {loading
@@ -278,7 +278,7 @@ const Login_2 = () => {
             <span className="absolute inset-0 flex items-center">
               {/* <span className="w-full border-t border-gray-300"></span> */}
             </span>
-            <span className="relative px-2 text-sm text-gray-600 font-semibold">
+            <span className="relative px-2 text-md text-white font-semibold">
               or {isLogin ? "login" : "register"} as
             </span>
           </div>
@@ -302,7 +302,7 @@ const Login_2 = () => {
                   setIsAdmin(true);
                   setIsLogin(true);
                 }}
-                className="w-full py-2 mb-4 bg-orange-400 text-white hover:bg-orange-500 mt-2 rounded-lg"
+                className="w-full py-2 mb-4 bg-blue-500 text-white hover:bg-blue-600 mt-2 rounded-lg"
               >
                 Admin Login
               </button>
@@ -339,7 +339,7 @@ const Login_2 = () => {
             <div className="mt-4 text-center text-sm">
               <button
                 onClick={() => setIsAdmin(false)}
-                className="text-purple-600 hover:underline"
+                className="text-blue-600 hover:underline"
               >
                 Back to User Login
               </button>

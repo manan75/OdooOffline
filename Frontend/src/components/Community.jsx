@@ -101,15 +101,15 @@ export default function CommunityPage() {
   };
 
   return (
-    <div className="min-h-screen w-full relative">
+    <div className="min-h-screen w-full relative bg-gradient-to-br from-[#006694] to-[#70A9CB] p-6 pt-21">
       {/* Custom Sky Blue and White Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-300 via-blue-200 to-white">
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-sky-300 via-blue-200 to-white">
         <div className="absolute inset-0 bg-gradient-to-t from-sky-400/20 via-sky-200/15 to-white/80"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-blue-100/30 via-transparent to-sky-100/40"></div>
-      </div>
+      </div> */}
       
       {/* Content Container */}
-      <div className="relative z-10 p-6">
+      <div className="relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">

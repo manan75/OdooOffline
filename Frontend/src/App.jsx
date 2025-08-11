@@ -13,7 +13,7 @@ import DashBoard from './components/DashBoard'
 import Dashboard2 from './components/DashBoard2'
 import Form_2 from './components/Form_2'
 import Form from './components/Form'
-import KindleDashboard from './components/LibDashBoard.jsx'
+import TravelDashboard from './components/UserDashBoard.jsx'
 
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login_2/>}/>
          <Route path='/userHome' element={<HeroSection/>}/>
+         <Route path='/userDashBoard' element={<TravelDashboard/>}/>
           
       </Routes>
     </Router>

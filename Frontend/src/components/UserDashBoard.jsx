@@ -125,7 +125,7 @@ export default function TravelDashboard() {
                           <h4 className="font-semibold mb-2">{trip.destination}</h4>
                           <p className="text-sm text-gray-400 mb-2">{trip.date}</p>
                           <p className="text-xs text-gray-500 mb-4">{trip.type}</p> */}
-                          <button className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-lg text-white transition-colors">
+                          <button className="bg-blue-600 mt-3 hover:bg-blue-500 px-4 py-2 rounded text-lg text-white transition-colors">
                             View
                           </button>
                           </div>

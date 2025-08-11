@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../Models/userSchema.js'
+import adminSchema from '../Models/adminSchema.js';
+
 
 // Register a new user
 export const register = async (req, res) => {
@@ -102,3 +104,53 @@ export const logout = (req, res) => {
     message: "Logged out successfully",
   });
 };
+
+
+//admin login logic
+
+export const adminLogin = async(req,res)=>{
+      const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.json({ success: false, message: "Missing credentials" });
+  }
+
+  try {
+    // Explicitly select password field because it's hidden by default
+    const admin = await adminSchema.findOne({ email }).select('+password');
+
+    if (!admin) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+   
+
+    if (password!=admin.password) {
+      return res.json({ success: false, message: "Invalid password" });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { adminId: admin._id, email: admin.email },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+    );
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: false, // change to true if using HTTPS in production
+      sameSite: 'Lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.json({
+      success: true,
+      message: "Login successful",
+      token,
+      adminId: admin._id,
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+}

@@ -79,7 +79,7 @@ const Login_2 = () => {
     setMessage("");
 
     try {
-      const res = await axios.post("/api/admin/login", { email, password });
+      const res = await axios.post(`${backendURL}/api/auth/adminlogin`, { email, password });
       setMessage(res.data.message);
       if (res.data.success) {
         console.log("Admin token:", res.data.token);

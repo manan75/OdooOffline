@@ -1,55 +1,41 @@
 import React from "react";
 
 const Card = ({
-  image = "https://hips.hearstapps.com/hmg-prod/images/northern-lights-above-festhelltinden-peak-and-royalty-free-image-1620383439.",
-  title = "Hello World",
-  description = "Hi this is a card hello",
-  price = "100000",
-  tags = ["hello", "eww"],
-  buttonLabel = "Reserve"
+  image = "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+  title = "NEW DESIGN",
+  timeAgo = "2 hour ago",
+  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum praesentium amet, perspiciatis expedita quidem dolore...",
 }) => {
   return (
-    <div
-      className="relative w-80 h-[28rem] rounded-3xl overflow-hidden shadow-xl border border-white/10 transform transition-transform duration-300 hover:scale-105"
-      style={{
-        backgroundImage: `url(${image})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center"
-      }}
-    >
-      {/* Glassy Content */}
-      <div className="absolute inset-0 flex flex-col justify-between">
-        {/* Spacer for 60% */}
-        <div className="flex-1" />
+    <div className="relative w-80 rounded-3xl overflow-hidden shadow-xl bg-white group">
+      {/* Image */}
+      <div
+        className="w-full h-56 bg-cover bg-center"
+        style={{ backgroundImage: `url(${image})` }}
+      ></div>
 
-        {/* 30% Content */}
-        <div className="p-4 bg-[#45435C]/65 backdrop-blur-none text-white border-t border-white/10">
-          <div className="flex justify-between items-center mb-1">
-            <h2 className="text-lg font-semibold">{title}</h2>
-            {price && (
-              <span className="bg-[#45383F]/70 px-2 py-0.5 rounded text-xs">
-                ${price}
-              </span>
-            )}
-          </div>
-          <p className="text-xs mb-2">{description}</p>
-          <div className="flex flex-wrap gap-1">
-            {tags.map((tag, idx) => (
-              <span
-                key={idx}
-                className="bg-[#45383F]/70 text-[10px] px-2 py-0.5 rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
+      {/* Overlay container */}
+      <div className="absolute bottom-0 left-0 w-full transition-transform duration-300 group-hover:translate-y-0 translate-y-[60%]">
+        {/* Wave shape */}
+        <svg
+          className="w-full h-8"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 500 80"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,40 C150,80 350,0 500,40 L500,80 L0,80 Z"
+            fill="white"
+          />
+        </svg>
 
-        {/* 10% Action */}
-        <div className="px-4 pb-3 bg-[#45435C]/65 backdrop-blur-md border-t border-white/10">
-          <button className="w-full py-2 bg-white hover:bg-blue-300 rounded-full text-sm">
-            {buttonLabel}
-          </button>
+        {/* White content */}
+        <div className="bg-white px-5 pb-5 pt-1">
+          <h2 className="text-lg font-bold text-gray-800">{title}</h2>
+          <p className="text-xs text-gray-500">{timeAgo}</p>
+          <p className="text-sm text-gray-600 mt-2">
+            {description}
+          </p>
         </div>
       </div>
     </div>

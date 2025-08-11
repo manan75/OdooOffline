@@ -1,11 +1,8 @@
-
 import axios from "axios";
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppContent } from '../Context/AppContext';
 import { FcGoogle } from "react-icons/fc";
-import { useState,useEffect,useContext } from "react";
-
-
+import { useState, useContext } from "react";
 
 const Login_2 = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,9 +15,8 @@ const Login_2 = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-    const navigate = useNavigate()
-  const { backendURL, setIsLoggedIn, getUserData } = useContext(AppContent) 
-
+  const navigate = useNavigate();
+  const { backendURL, setIsLoggedIn, getUserData } = useContext(AppContent);
 
   // User Registration
   const handleRegister = async (e) => {
@@ -34,7 +30,6 @@ const Login_2 = () => {
       if (res.data.success) {
         setIsLogin(true);
         console.log("Registration successful");
-        
       }
     } catch (err) {
       setMessage("Registration failed");
@@ -45,35 +40,34 @@ const Login_2 = () => {
 
   // User Login
   const handleUserLogin = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setMessage("");
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
 
-  try {
-    const { data } = await axios.post(
-      `${backendURL}/api/auth/login`,
-      { email, password },
-      { withCredentials: true }
-    );
+    try {
+      const { data } = await axios.post(
+        `${backendURL}/api/auth/login`,
+        { email, password },
+        { withCredentials: true }
+      );
 
-    setMessage(data.message);
+      setMessage(data.message);
 
-    if (data.success) {
-      setIsLoggedIn(true);
-      await getUserData();
-      console.log("Login response: ", data);
-      navigate('/userhome');
-    } else {
-      alert(data.message);
+      if (data.success) {
+        setIsLoggedIn(true);
+        await getUserData();
+        console.log("Login response: ", data);
+        navigate('/userhome');
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("Login failed");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error(err);
-    setMessage("Login failed");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   // Admin Login
   const handleAdminLogin = async (e) => {
@@ -95,20 +89,23 @@ const Login_2 = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex w-full max-w-4xl bg-white/30 backdrop-blur-md rounded-xl shadow-lg overflow-hidden">
+    <div
+      className="min-h-screen flex justify-between items-center bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80')",
+      }}
+    >
+       {/* Text block */}
+      <div className="max-w-lg text-black space-y-4 ml-40">
+        <h1 className="text-3xl font-bold">Global Trotter</h1>
+        <h2 className="text-5xl font-bold">EXPLORE HORIZONS</h2>
+        <h3 className="text-2xl">Where Your Dream Destinations Become Reality.</h3>
+        <h3 className="text-2xl">Embark on a journey where every corner of the world is within your reach.</h3>
+      </div>
+      <div className="flex w-full max-w-lg rounded-xl overflow-hidden shadow-lg border-2 border-white mr-50">
 
-        {/* Left Side with GIF */}
-        <div className="hidden md:flex flex-col justify-center items-center w-1/2 relative">
-          <img
-            src="https://i.pinimg.com/originals/54/58/a1/5458a14ae4c8f07055b7441ff0f234cf.gif"
-            alt="Animated Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Right Side */}
-        <div className="w-full md:w-1/2 p-8 bg-white/70 backdrop-blur-sm">
+        <div className="w-full p-8 bg-gray/100 backdrop-blur-sm">
           <h3 className="text-3xl font-semibold text-gray-800 mb-1">
             {isAdmin ? "Admin Login" : isLogin ? "Login" : "Register"}
           </h3>
@@ -121,7 +118,11 @@ const Login_2 = () => {
           </p>
 
           {message && (
-            <div className={`mb-4 text-sm ${message.includes("success") ? "text-green-600" : "text-red-500"}`}>
+            <div
+              className={`mb-4 text-sm ${
+                message.includes("success") ? "text-green-600" : "text-red-500"
+              }`}
+            >
               {message}
             </div>
           )}
@@ -178,7 +179,7 @@ const Login_2 = () => {
               className={`w-full py-2 rounded transition ${
                 isAdmin
                   ? "bg-red-500 text-white hover:bg-red-600"
-                  : "bg-purple-600 text-white hover:bg-purple-700 mt-5 mb-8 rounded-lg"
+                  : "bg-orange-600 text-white hover:bg-purple-700 mt-2 rounded-lg"
               }`}
             >
               {loading

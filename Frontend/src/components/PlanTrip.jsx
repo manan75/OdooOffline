@@ -11,8 +11,9 @@ export default function PlanTrip() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
+  const [coverPhotoURL, setCoverPhotoURL] = useState(""); // NEW state for image URL
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,26 +25,26 @@ export default function PlanTrip() {
         description,
         start_date: startDate,
         end_date: endDate,
-        cover_photo: "placeholder_image.jpg" // random placeholder
+        cover_photo: coverPhotoURL || null,  // use input URL or null
       });
 
       console.log("Trip created:", res.data);
       alert("Trip created successfully!");
-      // Optionally reset form
+      // Reset form
       setTripName("");
       setStartDate("");
       setEndDate("");
       setDescription("");
-      navigate('/travelPlanner',{
-  state: {
-    tripName,
-    startDate,
-    endDate,
-    tripId: res.data.trip_id 
-  }
-})
+      setCoverPhotoURL("");  // reset image url
 
-      
+      navigate('/travelPlanner', {
+        state: {
+          tripName,
+          startDate,
+          endDate,
+          tripId: res.data.trip_id,
+        }
+      });
     } catch (err) {
       console.error("Error creating trip:", err);
       alert("Failed to create trip");
@@ -61,6 +62,7 @@ export default function PlanTrip() {
 
           {/* Trip Form */}
           <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* Trip Name */}
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <label className="block text-white font-semibold mb-1">
@@ -76,6 +78,7 @@ export default function PlanTrip() {
               </div>
             </div>
 
+            {/* Dates */}
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <label className="block text-white font-semibold mb-1">
@@ -103,7 +106,21 @@ export default function PlanTrip() {
               </div>
             </div>
 
-            {/* Description Field */}
+            {/* Cover Photo URL */}
+            <div>
+              <label className="block text-white font-semibold mb-1">
+                Cover Photo URL:
+              </label>
+              <input
+                type="url"
+                placeholder="https://example.com/your-image.jpg"
+                value={coverPhotoURL}
+                onChange={(e) => setCoverPhotoURL(e.target.value)}
+                className="w-full p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-gray-300"
+              />
+            </div>
+
+            {/* Description */}
             <div>
               <label className="block text-white font-semibold mb-1">
                 Description:
@@ -114,7 +131,7 @@ export default function PlanTrip() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-gray-300 resize-none"
-              ></textarea>
+              />
             </div>
 
             <button

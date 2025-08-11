@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Sun, Moon, Menu, X, Home, Users } from "lucide-react";
+import { Sun, Moon, Menu, X, Home, Users, Compass } from "lucide-react";
+import { Link } from "react-router-dom"; // ✅ Import Link
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -27,16 +28,30 @@ const Navbar = () => {
           <span className="text-xl font-semibold text-white">MyApp</span>
         </div>
 
-        
-
         {/* Right: Nav Buttons + User Image */}
         <div className="flex items-center gap-10 text-white">
-          <button className="flex items-center gap-2 hover:scale-105 transition-transform">
+          <Link
+            to="/landingPage"
+            className="flex items-center gap-2 hover:scale-105 transition-transform"
+          >
             <Home size={20} /> Home
-          </button>
-          <button className="flex items-center gap-2 hover:scale-105 transition-transform">
+          </Link>
+
+          <Link
+            to="/community"
+            className="flex items-center gap-2 hover:scale-105 transition-transform"
+          >
             <Users size={20} /> Community
-          </button>
+          </Link>
+
+          {/* ✅ New Travel Dashboard link */}
+          <Link
+            to="/travelDashboard"
+            className="flex items-center gap-2 hover:scale-105 transition-transform"
+          >
+            <Compass size={20} /> Travel Dashboard
+          </Link>
+
           <img
             src="https://thumbs.dreamstime.com/b/funny-avatar-cunning-emoji-flat-vector-illustration-comic-yellow-social-media-sticker-humorous-cartoon-face-smiling-mouth-162122340.jpg"
             alt="User"
@@ -59,6 +74,10 @@ const Navbar = () => {
             </li>
             <li className="flex items-center gap-2">
               <Users size={18} /> Community
+            </li>
+            {/* ✅ Travel Dashboard link in sidebar too */}
+            <li className="flex items-center gap-2">
+              <Compass size={18} /> Travel Dashboard
             </li>
           </ul>
         </aside>

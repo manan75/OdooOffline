@@ -1,16 +1,16 @@
 
 
-const Card = ({
+export default function Card ({
   image = "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
   title = "NEW DESIGN",
   timeAgo = "2 hour ago",
   description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum praesentium amet, perspiciatis expedita quidem dolore...",
-}) => {
+}) {
   return (
     <div className="relative w-80 rounded-3xl overflow-hidden shadow-xl bg-white group">
       {/* Image */}
       <div
-        className="w-full h-56 bg-cover bg-center"
+        className="w-full h-80 bg-cover bg-center"
         style={{ backgroundImage: `url(${image})` }}
       ></div>
 
@@ -42,4 +42,3 @@ const Card = ({
   );
 };
 
-export default Card;

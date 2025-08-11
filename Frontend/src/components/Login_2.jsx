@@ -60,7 +60,7 @@ const Login_2 = () => {
         setIsLoggedIn(true);
         await getUserData();
         console.log("Login response: ", data);
-        navigate('/userhome');
+        navigate('/landingPage');
       } else {
         alert(data.message);
       }

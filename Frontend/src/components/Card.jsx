@@ -1,16 +1,15 @@
-
-
 export default function Card ({
   image = "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
   title = "NEW DESIGN",
-  timeAgo = "2 hour ago",
+  timeAgo = "2 hours ago",
   description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum praesentium amet, perspiciatis expedita quidem dolore...",
+  className = ""
 }) {
   return (
-    <div className="relative w-80 rounded-3xl overflow-hidden shadow-xl bg-white group">
+    <div className={`relative w-full rounded-3xl overflow-hidden shadow-xl bg-white group ${className}`}>
       {/* Image */}
       <div
-        className="w-full h-80 bg-cover bg-center"
+        className="w-full h-64 md:h-72 bg-cover bg-center"
         style={{ backgroundImage: `url(${image})` }}
       ></div>
 
@@ -30,15 +29,12 @@ export default function Card ({
         </svg>
 
         {/* White content */}
-        <div className="bg-white px-5 pb-5 pt-1">
+        <div className="bg-white px-5 pb-20 pt-1">
           <h2 className="text-lg font-bold text-gray-800">{title}</h2>
           <p className="text-xs text-gray-500">{timeAgo}</p>
-          <p className="text-sm text-gray-600 mt-2">
-            {description}
-          </p>
+          <p className="text-sm text-gray-600 mt-2">{description}</p>
         </div>
       </div>
     </div>
   );
 };
-

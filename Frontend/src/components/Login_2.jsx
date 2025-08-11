@@ -13,7 +13,7 @@ const Login_2 = () => {
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -28,7 +28,7 @@ const Login_2 = () => {
     setMessage("");
 
     try {
-      const res = await axios.post(`${backendURL}/api/auth/register`, { name, email, password });
+      const res = await axios.post(`${backendURL}/api/auth/register`, { name, email, password,city, address});
       setMessage(res.data.message);
       if (res.data.success) {
         setIsLogin(true);
@@ -166,9 +166,9 @@ const Login_2 = () => {
             />
             <input
               type="text"
-              placeholder="Country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 </>

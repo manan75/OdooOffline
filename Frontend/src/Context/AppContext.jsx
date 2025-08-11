@@ -9,11 +9,11 @@ export const AppContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  // ✅ Fetch user data on app load
+  // Fetch user data on app load
   const getUserData = async () => {
     try {
       const { data } = await axios.get(`${backendURL}/api/user/data`, {
-        withCredentials: true, // 🔑 important for cookie-based auth
+        withCredentials: true, //  important for cookie-based auth
       });
 
       if (data.success) {
@@ -30,7 +30,7 @@ export const AppContextProvider = (props) => {
     }
   };
 
-  // 🔁 Load user data on refresh
+  // Load user data on refresh
   useEffect(() => {
     getUserData();
   }, []);

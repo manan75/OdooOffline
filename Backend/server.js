@@ -3,9 +3,12 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
-import connectDB from './Config/db.js'
+
+
 import authRouter from './Routes/authRoutes.js'
 import userRouter from './Routes/userRoutes.js'
+import db from './Config/db.js'
+import searchRouter from './Routes/searchRoutes.js'
 
 
 
@@ -19,24 +22,17 @@ app.use(cors({
   credentials: true, 
 }));
 app.use(express.json())
-connectDB();
+
 app.use(cookieParser())
 
 
 //API's
 
-app.use('/api/auth', authRouter)
-app.use('/api/user', userRouter)
+app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
+app.use('/api/search', searchRouter);
 
 app.get('/', (req, res) => res.send('StackIt API is running'))
-
-
-
-
-
-
-
-
 
 
     app.listen(process.env.PORT, () => {
